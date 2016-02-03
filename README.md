@@ -3,8 +3,8 @@
 This project currently contains simple projects showing how to run API tests with 
 Ready! API TestServer.
 
-In both cases you will have to provide a system property named testserver.host containing
-the hostname of your TestServer installation.
+In both cases you will have to provide system properties for testserver.host, testserver.user and 
+ testserver.password containing the hostname, user and password of your TestServer installation. 
 
 ### JUnit Client Sample
 
@@ -13,7 +13,7 @@ against the SwaggerHub API and assert the response. You can run this either from
 IDE or with maven:
 
 ```
-mvn surefire:test -Dtestserver.host=...
+mvn surefire:test -Dtestserver.host=... -Dtestserver.user=... -Dtestserver.password=...
 ```
 
 ### Maven Plugin Sample
@@ -23,6 +23,9 @@ testserver-maven-plugin is configured to run as part of your integration tests w
 performing a mvn:install build - but you can also trigger them directly with 
 
 ```
-mvn testserver:run -Dtestserver.host=...
+mvn testserver:run -Dtestserver.host=... -Dtestserver.user=... -Dtestserver.password=...
 ```
 
+### Looking for more samples?
+
+Please don't hesitate to raise issues in this repo to ask for more!
