@@ -8,7 +8,8 @@ In both cases you will have to provide system properties for testserver.host, te
 
 ### JUnit Client Sample
 
-This contains a single unit test that uses the [TestServer Java Client](https://github.com/SmartBear/ready-api-testserver-client) to run a single request
+In the java/junit-client-sample folder/module; this contains a single unit test that uses the 
+[TestServer Java Client](https://github.com/SmartBear/ready-api-testserver-client) to run a single request
 against the SwaggerHub API and assert the response. You can run this either from within your
 IDE or with maven:
 
@@ -18,9 +19,10 @@ mvn surefire:test -Dtestserver.host=... -Dtestserver.user=... -Dtestserver.passw
 
 ### Maven Plugin Sample
 
-This contains a single recipe that tests the SwaggerHub API and asserts the response. The 
-[testserver-maven-plugin](https://github.com/olensmar/readyapi-testserver-maven-plugin) is configured to run as part of your integration tests when
-performing a mvn:install build - but you can also trigger them directly with 
+In the java/maven-plugin-sample folder/module; this contains a single recipe that tests the SwaggerHub API 
+and asserts the response. The [testserver-maven-plugin](https://github.com/olensmar/readyapi-testserver-maven-plugin) 
+is configured to run as part of your integration tests when performing a mvn:install build - but you can also 
+trigger them directly with 
 
 ```
 mvn testserver:run -Dtestserver.host=... -Dtestserver.user=... -Dtestserver.password=...
