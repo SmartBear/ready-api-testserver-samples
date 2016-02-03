@@ -8,7 +8,7 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>ready-api-testserver-samples-junit</artifactId>
+    <artifactId>ready-api-testserver-junit-client-sample</artifactId>
     <packaging>jar</packaging>
 
     <name>ready-api-testserver-samples-junit</name>
