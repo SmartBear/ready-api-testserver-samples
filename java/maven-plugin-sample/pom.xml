@@ -11,7 +11,7 @@
     <artifactId>ready-api-testserver-maven-plugin-sample</artifactId>
     <packaging>jar</packaging>
 
-    <name>ready-api-testserver-samples-maven</name>
+    <name>Ready! API TestServer Maven Sample</name>
 
     <properties>
         <testserver.user>defaultUser</testserver.user>
@@ -51,6 +51,7 @@
                     </dependency>
                 </dependencies>
             </plugin>
+
         </plugins>
     </build>
 

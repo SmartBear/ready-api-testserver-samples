@@ -3,8 +3,11 @@
 This project currently contains simple projects showing how to run API tests with 
 Ready! API TestServer.
 
-In both cases you will have to provide system properties for testserver.host, testserver.user and 
- testserver.password containing the hostname, user and password of your TestServer installation. 
+### Java Samples
+
+There are currently two java/maven based samples - in both cases you will have to provide system properties 
+for testserver.host, testserver.user and testserver.password containing the hostname, user and password of 
+your TestServer installation. 
 
 ### JUnit Client Sample
 

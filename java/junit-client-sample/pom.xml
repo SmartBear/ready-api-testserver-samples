@@ -11,7 +11,7 @@
     <artifactId>ready-api-testserver-junit-client-sample</artifactId>
     <packaging>jar</packaging>
 
-    <name>ready-api-testserver-samples-junit</name>
+    <name>Ready! API TestServet JUnit Sample</name>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
