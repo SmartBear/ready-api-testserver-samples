@@ -1,4 +1,4 @@
-## Samples projects for Ready! API TestServer usage
+## Samples for Ready! API TestServer usage
 
 This project currently contains simple projects showing how to run API tests with 
 Ready! API TestServer.
