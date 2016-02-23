@@ -14,9 +14,9 @@
     <name>Ready! API TestServer Maven Sample</name>
 
     <properties>
-        <testserver.user>defaultUser</testserver.user>
-        <testserver.password>defaultPassword</testserver.password>
-        <testserver.host>someHost</testserver.host>
+        <testserver.user>demoUser</testserver.user>
+        <testserver.password>demoPassword</testserver.password>
+        <testserver.host>http://testserver.readyapi.io:8080</testserver.host>
     </properties>
 
     <build>
