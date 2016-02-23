@@ -22,9 +22,9 @@ public class SimpleTest
 
     @BeforeClass
     public static void initExecutor() throws MalformedURLException {
-        String hostName = System.getProperty( "testserver.host", "<your TestServer hostname>" );
-        String user = System.getProperty( "testserver.user", "defaultUser" );
-        String password = System.getProperty( "testserver.password", "defaultPassword" );
+        String hostName = System.getProperty( "testserver.host", "http://testserver.readyapi.io:8080" );
+        String user = System.getProperty( "testserver.user", "demoUser" );
+        String password = System.getProperty( "testserver.password", "demoPassword" );
 
         URL url = new URL( hostName );
 
@@ -34,12 +34,27 @@ public class SimpleTest
     }
 
     @Test
-    public void simpleTest() throws Exception {
+    public void simpleCountTest() throws Exception {
         TestRecipe recipe = newTestRecipe()
             .addStep(
                 getRequest("https://api.swaggerhub.com/apis")
                     .addQueryParameter("query", "testserver")
-                    .assertJsonContent("$.totalCount", "1" )
+                    .assertJsonContent("$.totalCount", "2" )
+            )
+            .buildTestRecipe();
+
+        Execution execution = executor.executeRecipe(recipe);
+
+        assertEquals(Arrays.toString( execution.getErrorMessages().toArray()),
+            ProjectResultReport.StatusEnum.FINISHED, execution.getCurrentStatus());
+    }
+
+    @Test
+    public void simpleTest() throws Exception {
+        TestRecipe recipe = newTestRecipe()
+            .addStep(
+                getRequest("https://api.swaggerhub.com/apis")
+                    .assertValidStatusCodes( 200 )
             )
             .buildTestRecipe();
 
