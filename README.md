@@ -34,14 +34,13 @@ mvn testserver:run -Dtestserver.host=... -Dtestserver.user=... -Dtestserver.pass
 
 ### Cucumber Samples
 
-The Cucumber sample contains a simple feature file for testing the SwaggerHub API 
-(https://github.com/SmartBear/ready-api-testserver-samples/blob/master/java/cucumber-sample/src/test/resources/cucumber/swaggerhub.feature)
-and corresponding Step definitions to build and execute the required recipe 
-(https://github.com/SmartBear/ready-api-testserver-samples/blob/master/java/cucumber-sample/src/test/java/com/smartbear/readyapi/testserver/SwaggerHubStepDefs.java).
+The Cucumber sample contains a simple [feature file](https://github.com/SmartBear/ready-api-testserver-samples/blob/master/java/cucumber-sample/src/test/resources/cucumber/swaggerhub.feature) for testing the SwaggerHub API 
+and corresponding [step definitions](https://github.com/SmartBear/ready-api-testserver-samples/blob/master/java/cucumber-sample/src/test/java/com/smartbear/readyapi/testserver/SwaggerHubStepDefs.java) to build and execute the required recipe. 
 
 Running them from the command-line with "mvn test" will result in the following:
 
 ```
+...
 -------------------------------------------------------
  T E S T S
 -------------------------------------------------------
@@ -75,6 +74,7 @@ Feature: SwaggerHub REST API
 0m2.136s
 
 Tests run: 18, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 2.617 sec
+...
 ```
 
 ### Looking for more samples?
