@@ -3,11 +3,12 @@
 This project currently contains simple projects showing how to run API tests with 
 Ready! API TestServer.
 
-### Java Samples
+## Configuration
 
-There are currently two java/maven based samples - in both cases you will have to provide system properties 
-for testserver.host, testserver.user and testserver.password containing the hostname, user and password of 
-your TestServer installation. 
+All the samples in this project run against the public TestServer instance available at 
+http://testserver.readyapi.io:8080, if you want to run against your own installation you
+can provide system properties for testserver.host, testserver.user and testserver.password 
+containing the hostname, user and password of your TestServer installation. 
 
 ### JUnit Client Sample
 
@@ -30,6 +31,11 @@ trigger them directly with
 ```
 mvn testserver:run -Dtestserver.host=... -Dtestserver.user=... -Dtestserver.password=...
 ```
+
+### Cucumber Samples
+
+The Cucumber sample contains a simple feature file for testing the SwaggerHub API ()
+and corresponding Step definitions to build and execute the required recipe.
 
 ### Looking for more samples?
 

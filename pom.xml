@@ -12,7 +12,7 @@
     <modules>
         <module>java/junit-client-sample</module>
         <module>java/maven-plugin-sample</module>
+        <module>java/cucumber-sample</module>
     </modules>
-
 
 </project>

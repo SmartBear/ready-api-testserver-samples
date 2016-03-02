@@ -19,8 +19,8 @@ public class ApiTestBase {
 
         URL url = new URL( hostName );
 
-        SimpleNonFluentTest.executor = new RecipeExecutor( Scheme.valueOf(url.getProtocol().toUpperCase()),
+        executor = new RecipeExecutor( Scheme.valueOf(url.getProtocol().toUpperCase()),
             url.getHost(), url.getPort() );
-        SimpleNonFluentTest.executor.setCredentials( user, password );
+        executor.setCredentials( user, password );
     }
 }
