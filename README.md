@@ -34,8 +34,48 @@ mvn testserver:run -Dtestserver.host=... -Dtestserver.user=... -Dtestserver.pass
 
 ### Cucumber Samples
 
-The Cucumber sample contains a simple feature file for testing the SwaggerHub API ()
-and corresponding Step definitions to build and execute the required recipe.
+The Cucumber sample contains a simple feature file for testing the SwaggerHub API 
+(https://github.com/SmartBear/ready-api-testserver-samples/blob/master/java/cucumber-sample/src/test/resources/cucumber/swaggerhub.feature)
+and corresponding Step definitions to build and execute the required recipe 
+(https://github.com/SmartBear/ready-api-testserver-samples/blob/master/java/cucumber-sample/src/test/java/com/smartbear/readyapi/testserver/SwaggerHubStepDefs.java).
+
+Running them from the command-line with "mvn test" will result in the following:
+
+```
+-------------------------------------------------------
+ T E S T S
+-------------------------------------------------------
+Running com.smartbear.readyapi.testserver.RunCucumberTest
+Feature: SwaggerHub REST API
+
+  Scenario: Default API Listing                         # swaggerhub.feature:2
+    When a request to the API listing is made           # SwaggerHubStepDefs.aRequestToTheAPIListing()
+    Then a list of APIs should be returned within 500ms # SwaggerHubStepDefs.aListOfAPIsShouldBeReturned(int)
+
+  Scenario: Owner API Listing                           # swaggerhub.feature:6
+    Given an owner named swagger-hub                    # SwaggerHubStepDefs.anOwnerNamed(String)
+    When a request to the API listing is made           # SwaggerHubStepDefs.aRequestToTheAPIListing()
+    Then a list of APIs should be returned within 500ms # SwaggerHubStepDefs.aListOfAPIsShouldBeReturned(int)
+
+  Scenario: API Version Listing                         # swaggerhub.feature:11
+    Given an owner named swagger-hub                    # SwaggerHubStepDefs.anOwnerNamed(String)
+    And an api named registry-api                       # SwaggerHubStepDefs.anApiNamed(String)
+    When a request to the API listing is made           # SwaggerHubStepDefs.aRequestToTheAPIListing()
+    Then a list of APIs should be returned within 500ms # SwaggerHubStepDefs.aListOfAPIsShouldBeReturned(int)
+
+  Scenario: API Retrieval                                  # swaggerhub.feature:17
+    Given an owner named swagger-hub                       # SwaggerHubStepDefs.anOwnerNamed(String)
+    And an api named registry-api                          # SwaggerHubStepDefs.anApiNamed(String)
+    And a version named 1.0.0                              # SwaggerHubStepDefs.aVersionNamed(String)
+    When a request to the API listing is made              # SwaggerHubStepDefs.aRequestToTheAPIListing()
+    Then an API definition should be returned within 500ms # SwaggerHubStepDefs.anApiDefinitionShouldBeReturned(int)
+
+4 Scenarios (4 passed)
+14 Steps (14 passed)
+0m2.136s
+
+Tests run: 18, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 2.617 sec
+```
 
 ### Looking for more samples?
 
