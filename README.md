@@ -8,13 +8,6 @@ Clone this project and run 'mvn test' in the root folder; this will run each of 
 - The Maven plugin runs API test recipes and projects provided as resources
 - The Cucumber sample "executes" a feature file via the java client for the TestServer 
 
-## Configuration
-
-All the samples in this project run against the public TestServer instance available at 
-http://testserver.readyapi.io:8080, if you want to run against your own installation you
-can provide system properties for testserver.host, testserver.user and testserver.password 
-containing the hostname, user and password of your TestServer installation. 
-
 ### JUnit Client Sample
 
 In the java/junit-client-sample folder/module; this contains a single unit test that uses the 
@@ -81,6 +74,14 @@ Feature: SwaggerHub REST API
 Tests run: 18, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 2.617 sec
 ...
 ```
+
+## Configuration
+
+All the samples in this project run against the public TestServer instance available at 
+http://testserver.readyapi.io:8080, if you want to run against your own installation you
+can provide system properties for testserver.host, testserver.user and testserver.password 
+containing the hostname, user and password of your TestServer installation. 
+
 
 ### Looking for more samples?
 
