@@ -8,7 +8,7 @@ Clone this project and run 'mvn test' in the root folder; this will run each of 
 - The Maven plugin runs API test recipes and projects provided as resources
 - The Cucumber sample "executes" a feature file via the java client for the TestServer 
 
-### JUnit Client Sample
+### JUnit Sample
 
 In the java/junit-client-sample folder/module; this contains a single unit test that uses the 
 [TestServer Java Client](https://github.com/SmartBear/ready-api-testserver-client) to run a single request
@@ -30,7 +30,7 @@ trigger them directly with
 mvn testserver:run -Dtestserver.host=... -Dtestserver.user=... -Dtestserver.password=...
 ```
 
-### Cucumber Samples
+### Cucumber Sample
 
 The Cucumber sample contains a simple [feature file](https://github.com/SmartBear/ready-api-testserver-samples/blob/master/java/cucumber-sample/src/test/resources/cucumber/swaggerhub.feature) for testing the SwaggerHub API 
 and corresponding [step definitions](https://github.com/SmartBear/ready-api-testserver-samples/blob/master/java/cucumber-sample/src/test/java/com/smartbear/readyapi/testserver/SwaggerHubStepDefs.java) to build and execute the required recipe. 
