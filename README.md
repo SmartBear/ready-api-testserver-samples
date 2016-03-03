@@ -3,6 +3,11 @@
 This project currently contains simple projects showing how to run API tests with 
 Ready! API TestServer.
 
+Clone this project and run 'mvn test' in the root folder; this will run each of the included modules;
+- The JUnit sample runs API tests using the java client library for TestServer
+- The Maven plugin runs API test recipes and projects provided as resources
+- The Cucumber sample "executes" a feature file via the java client for the TestServer 
+
 ## Configuration
 
 All the samples in this project run against the public TestServer instance available at 
