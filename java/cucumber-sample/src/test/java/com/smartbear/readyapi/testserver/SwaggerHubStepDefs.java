@@ -14,6 +14,8 @@ import com.smartbear.readyapi.client.model.ValidHttpStatusCodesAssertion;
 import com.smartbear.readyapi.client.model.XPathContainsAssertion;
 import com.smartbear.readyapi.client.teststeps.TestStepTypes;
 import com.smartbear.readyapi.client.teststeps.TestSteps;
+import cucumber.api.PendingException;
+import cucumber.api.java.After;
 import cucumber.api.java.en.And;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
@@ -48,6 +50,8 @@ public class SwaggerHubStepDefs {
         testStep.setURI( "https://api.swaggerhub.com/apis" );
         testStep.setMethod( TestSteps.HttpMethod.GET.name() );
         testStep.setType(TestStepTypes.REST_REQUEST.getName());
+
+        executor.setTestStep( testStep );
     }
 
     @Then("^a list of APIs should be returned within (\\d+)ms$")
@@ -61,7 +65,6 @@ public class SwaggerHubStepDefs {
         assertion.setType("XPath Match");
 
         addDefaultAssertions(timeout, assertion);
-        runTestCase();
     }
 
     private void addDefaultAssertions(int timeout, Assertion contentAssertion) {
@@ -73,8 +76,8 @@ public class SwaggerHubStepDefs {
         httpStatusCodesAssertion.setValidStatusCodes( Arrays.asList(200) );
         httpStatusCodesAssertion.setType("Valid HTTP Status Codes" );
 
-        testStep.setAssertions(
-            Arrays.<Assertion>asList( contentAssertion, httpStatusCodesAssertion, slaAssertion ));
+        executor.setAssertions(
+            Arrays.asList( contentAssertion, httpStatusCodesAssertion, slaAssertion ));
     }
 
     @Then("^an API definition should be returned within (\\d+)ms$")
@@ -88,7 +91,6 @@ public class SwaggerHubStepDefs {
         assertion.setType("JsonPath Match");
 
         addDefaultAssertions(timeout, assertion);
-        runTestCase();
     }
 
     private void buildEndpointFromParameters() {
@@ -103,18 +105,6 @@ public class SwaggerHubStepDefs {
                 }
             }
         }
-    }
-
-    private void runTestCase() {
-        TestCase testCase = new TestCase();
-        testCase.setFailTestCaseOnError( true );
-        testCase.setTestSteps(Arrays.<TestStep>asList(testStep));
-
-        TestRecipe recipe = new TestRecipe( testCase );
-        Execution execution = executor.executeRecipe(recipe);
-
-        assertEquals(Arrays.toString( execution.getErrorMessages().toArray()),
-            ProjectResultReport.StatusEnum.FINISHED, execution.getCurrentStatus());
     }
 
     @Given("^an owner named (.+)$")
