@@ -1,6 +1,7 @@
 package com.smartbear.readyapi.testserver;
 
 import com.google.common.collect.Lists;
+import com.google.common.collect.Maps;
 import com.google.inject.Inject;
 import com.smartbear.readyapi.client.TestRecipe;
 import com.smartbear.readyapi.client.execution.Execution;
@@ -23,9 +24,12 @@ import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import cucumber.runtime.java.guice.ScenarioScoped;
+import io.swagger.util.Json;
 
+import java.io.StringWriter;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 
 import static org.junit.Assert.assertEquals;
 
@@ -40,6 +44,7 @@ public class GenericRestStepDefs {
     private RestTestRequestStep testStep;
     private List<Assertion> assertions = Lists.newArrayList();
     private List<Parameter> parameters = Lists.newArrayList();
+    private Map<String,String> bodyValues = Maps.newHashMap();
 
     @Inject
     public GenericRestStepDefs(CucumberRecipeExecutor executor ){
@@ -72,7 +77,17 @@ public class GenericRestStepDefs {
         testStep = new RestTestRequestStep();
         testStep.setURI( endpoint + path );
         testStep.setMethod( method.toUpperCase() );
-        testStep.setRequestBody( requestBody );
+        if( requestBody != null ) {
+            testStep.setRequestBody(requestBody);
+        }
+
+        if( !bodyValues.isEmpty()){
+            StringWriter writer = new StringWriter();
+            Json.mapper().writer().writeValue( writer, bodyValues );
+            testStep.setRequestBody( writer.toString() );
+            testStep.setMediaType("application/json");
+        }
+
         testStep.setType(TestStepTypes.REST_REQUEST.getName());
 
         ValidHttpStatusCodesAssertion httpStatusCodesAssertion = new ValidHttpStatusCodesAssertion();
@@ -136,5 +151,10 @@ public class GenericRestStepDefs {
         if( testStep != null ){
             testStep.setEncoding( type );
         }
+    }
+
+    @And("^(.*) equals (.*)$")
+    public void bodyParameterIs( String name, String value ) throws Throwable {
+        bodyValues.put( name, value );
     }
 }

@@ -14,7 +14,14 @@ Feature: Petstore API
     And the Accepts header is application/json
     Then a 200 response is returned within 50ms
 
-  Scenario: Create pet
+  Scenario: Create pet with parameters
+    Given the API running at http://petstore.swagger.io/v2
+    When a POST request to /pet is made
+    And name equals doggies
+    And status equals available
+    Then a 200 response is returned within 50ms
+
+  Scenario: Create pet with body
     Given the API running at http://petstore.swagger.io/v2
     When a POST request to /pet is made
     And the request body is
@@ -31,3 +38,4 @@ Feature: Petstore API
     """
   "id":
     """
+
