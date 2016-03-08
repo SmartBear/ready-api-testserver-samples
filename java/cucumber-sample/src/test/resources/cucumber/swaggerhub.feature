@@ -1,4 +1,5 @@
 Feature: SwaggerHub REST API
+
   Scenario: Default API Listing
     Given the Swagger definition at https://api.swaggerhub.com/apis/swagger-hub/registry-api/1.0.10
     When a request to searchApis is made
@@ -21,10 +22,18 @@ Feature: SwaggerHub REST API
       "url":"/apis/swagger-hub/registry-api"
       """
 
-  Scenario: API Retrieval
+  Scenario Outline: API Retrieval
     Given the Swagger definition at https://api.swaggerhub.com/apis/swagger-hub/registry-api/1.0.10
     When a request to getDefinition is made
-    And owner is swagger-hub
-    And api is registry-api
-    And version is 1.0.10
+    And owner is <owner>
+    And api is <api>
+    And version is <version>
     Then the response is the Swagger API in requested format
+    And the response body contains
+    """
+    "description":"<description>"
+    """
+    Examples:
+    | owner       | api          | version  | description                       |
+    | swagger-hub | registry-api | 1.0.10   | The registry API for SwaggerHub   |
+    | fehguy      | sonos-api    | 1.0.0    | A REST API for the Sonos platform |

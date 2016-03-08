@@ -144,7 +144,7 @@ public class GenericRestStepDefs {
     }
 
     @And("^the response body contains$")
-    public void theResponseBodyIs( String responseBody ) throws Throwable {
+    public void theResponseBodyContains( String responseBody ) throws Throwable {
         SimpleContainsAssertion contentAssertion = new SimpleContainsAssertion();
         contentAssertion.setToken( responseBody.trim() );
         contentAssertion.setType( "Contains");
@@ -284,5 +284,10 @@ public class GenericRestStepDefs {
             "assert messageExchange.responseHeaders[\"" + header + "\"].contains( \"" + value + "\")" );
 
         assertions.add( scriptAssertion );
+    }
+
+    @And("^the response body contains (.*)$")
+    public void theResponseBodyContains2( String content ) throws Throwable {
+        theResponseBodyContains( content );
     }
 }
