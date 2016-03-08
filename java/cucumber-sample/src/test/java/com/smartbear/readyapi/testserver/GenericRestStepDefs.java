@@ -25,13 +25,16 @@ import io.swagger.models.Swagger;
 import io.swagger.util.Json;
 
 import java.io.StringWriter;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
 @ScenarioScoped
 public class GenericRestStepDefs {
 
+    private static final ArrayList<String> PARAM_TYPES = Lists.newArrayList("query", "path", "header");
     private final CucumberRecipeExecutor executor;
     private final SwaggerCache swaggerCache;
     private String endpoint;
@@ -118,7 +121,7 @@ public class GenericRestStepDefs {
         testStep.setType(TestStepTypes.REST_REQUEST.getName());
 
         ValidHttpStatusCodesAssertion httpStatusCodesAssertion = new ValidHttpStatusCodesAssertion();
-        httpStatusCodesAssertion.setValidStatusCodes(Arrays.asList(statusCode));
+        httpStatusCodesAssertion.setValidStatusCodes(Collections.singletonList(statusCode));
         httpStatusCodesAssertion.setType("Valid HTTP Status Codes");
         assertions.add(httpStatusCodesAssertion);
 
@@ -187,23 +190,21 @@ public class GenericRestStepDefs {
     @And("^the type is (.*)$")
     public void theTypeIs(String type) throws Throwable {
         if (testStep != null) {
-            testStep.setEncoding(type);
+            testStep.setMediaType(type);
         }
     }
 
     @And("^([^ ]*) is (.*)$")
-    public void bodyParameterIs(String name, String value) throws Throwable {
+    public void parameterIs(String name, String value) throws Throwable {
 
         if (swaggerOperation != null) {
             for (io.swagger.models.parameters.Parameter parameter : swaggerOperation.getParameters()) {
                 if (parameter.getName().equalsIgnoreCase(name)) {
-                    if (parameter.getIn().equals("query")) {
-                        parameters.add(createParameter("QUERY", name, value));
-                    } else if (parameter.getIn().equals("path")) {
-                        parameters.add(createParameter("PATH", name, value));
-                    } else if (parameter.getIn().equals("header")) {
-                        parameters.add(createParameter("HEADER", name, value));
-                    } else if (parameter.getIn().equals("body")) {
+                    String type = parameter.getIn();
+                    if( PARAM_TYPES.contains(type)){
+                        parameters.add(createParameter(type.toUpperCase(), name, value));
+                    }
+                    else if (type.equals("body")) {
                         requestBody = value;
                     }
 
@@ -221,6 +222,14 @@ public class GenericRestStepDefs {
             throw new Exception("Missing Swagger definition");
         }
 
+        if( !findSwaggerOperation(operationId)){
+            throw new Exception("Could not find operation [" + operationId + "] in Swagger definition");
+        }
+    }
+
+    private boolean findSwaggerOperation(String operationId) {
+        swaggerOperation = null;
+
         for (String resourcePath : swagger.getPaths().keySet()) {
             Path path = swagger.getPath(resourcePath);
             for (HttpMethod httpMethod : path.getOperationMap().keySet()) {
@@ -233,9 +242,7 @@ public class GenericRestStepDefs {
             }
         }
 
-        if (swaggerOperation == null) {
-            throw new Exception("Could not find operation [" + operationId + "] in Swagger definition");
-        }
+        return swaggerOperation != null;
     }
 
     @And("^the request expects (.*)")
