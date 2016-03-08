@@ -137,6 +137,16 @@ public class GenericRestStepDefs {
         SimpleContainsAssertion contentAssertion = new SimpleContainsAssertion();
         contentAssertion.setToken(responseBody.trim());
         contentAssertion.setType("Contains");
+        contentAssertion.setIgnoreCase(true);
+        assertions.add(contentAssertion);
+    }
+
+    @And("^the response body matches$")
+    public void theResponseBodyMatches(String responseBodyRegEx) throws Throwable {
+        SimpleContainsAssertion contentAssertion = new SimpleContainsAssertion();
+        contentAssertion.setToken(responseBodyRegEx.trim());
+        contentAssertion.setType("Contains");
+        contentAssertion.setUseRegexp(true);
         assertions.add(contentAssertion);
     }
 
