@@ -24,6 +24,11 @@ import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import cucumber.runtime.java.guice.ScenarioScoped;
+import io.swagger.models.HttpMethod;
+import io.swagger.models.Operation;
+import io.swagger.models.Path;
+import io.swagger.models.Swagger;
+import io.swagger.parser.SwaggerParser;
 import io.swagger.util.Json;
 
 import java.io.StringWriter;
@@ -45,10 +50,24 @@ public class GenericRestStepDefs {
     private List<Assertion> assertions = Lists.newArrayList();
     private List<Parameter> parameters = Lists.newArrayList();
     private Map<String,String> bodyValues = Maps.newHashMap();
+    private Swagger swagger;
+    private Operation swaggerOperation;
+    private String mediaType;
 
     @Inject
     public GenericRestStepDefs(CucumberRecipeExecutor executor ){
         this.executor = executor;
+    }
+
+    @Given("^the Swagger definition at (.*)$")
+    public void theSwaggerDefinitionAt( String swaggerUrl ) throws Throwable {
+        SwaggerParser parser = new SwaggerParser();
+        swagger = parser.read( swaggerUrl );
+
+        if( swagger.getHost() != null ) {
+            endpoint = swagger.getSchemes().get(0).name().toLowerCase() + "://" +
+                swagger.getHost() + swagger.getBasePath();
+        }
     }
 
     @Given("^the API running at (.*)$")
@@ -56,8 +75,8 @@ public class GenericRestStepDefs {
         this.endpoint = endpoint;
     }
 
-    @When("^a (.*) request to (.*) is made$")
-    public void aPOSTRequestToPetIsMade( String method, String path ) throws Throwable {
+    @When("^a (.*) request to ([^ ]*) is made$")
+    public void aRequestToPathIsMade( String method, String path ) throws Throwable {
         this.method = method;
         this.path = path;
     }
@@ -79,6 +98,10 @@ public class GenericRestStepDefs {
         testStep.setMethod( method.toUpperCase() );
         if( requestBody != null ) {
             testStep.setRequestBody(requestBody);
+        }
+
+        if( mediaType != null ){
+            testStep.setMediaType( mediaType );
         }
 
         if( !bodyValues.isEmpty()){
@@ -128,7 +151,9 @@ public class GenericRestStepDefs {
 
     @And("^the (.*) parameter is (.*)$")
     public void theParameterIs( String name, String value ) throws Throwable {
-        parameters.add( createParameter( "QUERY", name, value) );
+
+        String type = path.contains( "{" + name + "}") ? "PATH" : "QUERY";
+        parameters.add(createParameter(type, name, value));
     }
 
     @And("^the (.*) header is (.*)$")
@@ -147,7 +172,6 @@ public class GenericRestStepDefs {
 
     @And("^the type is (.*)$")
     public void theTypeIs( String type) throws Throwable {
-
         if( testStep != null ){
             testStep.setEncoding( type );
         }
@@ -156,5 +180,43 @@ public class GenericRestStepDefs {
     @And("^(.*) equals (.*)$")
     public void bodyParameterIs( String name, String value ) throws Throwable {
         bodyValues.put( name, value );
+    }
+
+    @When("^a request to ([^ ]*) is made$")
+    public void aRequestToOperationIsMade( String operationId ) throws Throwable {
+        if( swagger == null ){
+            throw new Exception( "Missing Swagger definition");
+        }
+
+        for( String resourcePath : swagger.getPaths().keySet()){
+            Path path = swagger.getPath( resourcePath );
+            for(HttpMethod httpMethod : path.getOperationMap().keySet()){
+                Operation operation = path.getOperationMap().get(httpMethod);
+                if( operationId.equalsIgnoreCase(operation.getOperationId())){
+                    method = httpMethod.name().toUpperCase();
+                    this.path = resourcePath;
+                    swaggerOperation = operation;
+                }
+            }
+        }
+
+        if( swaggerOperation == null ){
+            throw new Exception( "Could not find operation [" + operationId + "] in Swagger definition");
+        }
+    }
+
+    @And("^the client accepts (.*)")
+    public void theClientAccepts( String format ) throws Throwable {
+        if( format.toLowerCase().equalsIgnoreCase("json")){
+            format = "application/json";
+        }
+        else if( format.toLowerCase().equalsIgnoreCase("yaml")){
+            format = "application/yaml";
+        }
+        else if( format.toLowerCase().equalsIgnoreCase("xml")){
+            format = "application/xml";
+        }
+
+        mediaType = format;
     }
 }
