@@ -6,6 +6,7 @@ import com.google.inject.Inject;
 import com.smartbear.readyapi.client.TestRecipe;
 import com.smartbear.readyapi.client.execution.Execution;
 import com.smartbear.readyapi.client.model.Assertion;
+import com.smartbear.readyapi.client.model.GroovyScriptAssertion;
 import com.smartbear.readyapi.client.model.Parameter;
 import com.smartbear.readyapi.client.model.ProjectResultReport;
 import com.smartbear.readyapi.client.model.ResponseSLAAssertion;
@@ -227,18 +228,47 @@ public class GenericRestStepDefs {
         }
     }
 
-    @And("^the response should be (.*)")
-    public void theResponseShouldBe( String format ) throws Throwable {
-        if( format.toLowerCase().equalsIgnoreCase("json")){
-            format = "application/json";
-        }
-        else if( format.toLowerCase().equalsIgnoreCase("yaml")){
-            format = "application/yaml";
-        }
-        else if( format.toLowerCase().equalsIgnoreCase("xml")){
-            format = "application/xml";
+    @And("^the request expects (.*)")
+    public void theRequestExpects( String format ) throws Throwable {
+        format = expandFormat(format);
+        theHeaderIs( "Accept", format );
+    }
+
+    private String expandFormat(String format) {
+        if( format.indexOf('/') == -1 ){
+            return "application/" + format;
         }
 
-        mediaType = format;
+        return format;
+    }
+
+    @And("^the response type is (.*)$")
+    public void theResponseTypeIs( String format ) throws Throwable {
+        GroovyScriptAssertion scriptAssertion = new GroovyScriptAssertion();
+        scriptAssertion.setType( "Script Assertion" );
+        scriptAssertion.setScript(
+            "assert messageExchange.responseHeaders[\"Content-Type\"].contains( \"" + expandFormat( format ) + "\")" );
+
+        assertions.add( scriptAssertion );
+    }
+
+    @And("^the response contains a (.*) header$")
+    public void theResponseContainsHeader( String header ) throws Throwable {
+        GroovyScriptAssertion scriptAssertion = new GroovyScriptAssertion();
+        scriptAssertion.setType( "Script Assertion" );
+        scriptAssertion.setScript(
+            "assert messageExchange.responseHeaders.containsKey(\"" + header + "\")" );
+
+        assertions.add( scriptAssertion );
+    }
+
+    @And("^the response (.*) header is (.*)$")
+    public void theResponseTypeIs( String header, String value ) throws Throwable {
+        GroovyScriptAssertion scriptAssertion = new GroovyScriptAssertion();
+        scriptAssertion.setType( "Script Assertion" );
+        scriptAssertion.setScript(
+            "assert messageExchange.responseHeaders[\"" + header + "\"].contains( \"" + value + "\")" );
+
+        assertions.add( scriptAssertion );
     }
 }

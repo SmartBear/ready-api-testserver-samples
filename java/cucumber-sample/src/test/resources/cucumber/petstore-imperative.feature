@@ -11,7 +11,7 @@ Feature: Petstore API
     Given the API running at http://petstore.swagger.io/v2
     When a GET request to /pet/findByTags is made
     And the tags parameter is test
-    And the response should be json
+    And the request expects json
     Then a 200 response is returned within 50ms
 
   Scenario: Create pet with parameters
