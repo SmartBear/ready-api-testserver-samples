@@ -11,14 +11,14 @@ Feature: Petstore API
     Given the API running at http://petstore.swagger.io/v2
     When a GET request to /pet/findByTags is made
     And the tags parameter is test
-    And the client accepts json
+    And the response should be json
     Then a 200 response is returned within 50ms
 
   Scenario: Create pet with parameters
     Given the API running at http://petstore.swagger.io/v2
     When a POST request to /pet is made
-    And name equals doggies
-    And status equals available
+    And name is doggies
+    And status is available
     Then a 200 response is returned within 50ms
 
   Scenario: Create pet with body

@@ -177,8 +177,30 @@ public class GenericRestStepDefs {
         }
     }
 
-    @And("^(.*) equals (.*)$")
+    @And("^([^ ]*) is (.*)$")
     public void bodyParameterIs( String name, String value ) throws Throwable {
+
+        if( swaggerOperation != null ){
+            for( io.swagger.models.parameters.Parameter parameter : swaggerOperation.getParameters()){
+               if( parameter.getName().equalsIgnoreCase( name )){
+                   if( parameter.getIn().equals("query")){
+                       parameters.add( createParameter( "QUERY", name, value ));
+                   }
+                   else if( parameter.getIn().equals("path")){
+                       parameters.add( createParameter( "PATH", name, value ));
+                   }
+                   else if( parameter.getIn().equals("header")){
+                       parameters.add( createParameter( "HEADER", name, value ));
+                   }
+                   else if( parameter.getIn().equals("body")){
+                       requestBody = value;
+                   }
+
+                   return;
+               }
+            }
+        }
+
         bodyValues.put( name, value );
     }
 
@@ -205,8 +227,8 @@ public class GenericRestStepDefs {
         }
     }
 
-    @And("^the client accepts (.*)")
-    public void theClientAccepts( String format ) throws Throwable {
+    @And("^the response should be (.*)")
+    public void theResponseShouldBe( String format ) throws Throwable {
         if( format.toLowerCase().equalsIgnoreCase("json")){
             format = "application/json";
         }
