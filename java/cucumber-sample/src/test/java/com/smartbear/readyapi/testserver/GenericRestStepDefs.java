@@ -28,6 +28,7 @@ import cucumber.runtime.java.guice.ScenarioScoped;
 import io.swagger.models.HttpMethod;
 import io.swagger.models.Operation;
 import io.swagger.models.Path;
+import io.swagger.models.Response;
 import io.swagger.models.Swagger;
 import io.swagger.parser.SwaggerParser;
 import io.swagger.util.Json;
@@ -43,6 +44,7 @@ import static org.junit.Assert.assertEquals;
 public class GenericRestStepDefs {
 
     private final CucumberRecipeExecutor executor;
+    private final SwaggerCache swaggerCache;
     private String endpoint;
     private String method;
     private String path;
@@ -53,21 +55,23 @@ public class GenericRestStepDefs {
     private Map<String,String> bodyValues = Maps.newHashMap();
     private Swagger swagger;
     private Operation swaggerOperation;
-    private String mediaType;
 
     @Inject
-    public GenericRestStepDefs(CucumberRecipeExecutor executor ){
+    public GenericRestStepDefs(CucumberRecipeExecutor executor, SwaggerCache swaggerCache ){
         this.executor = executor;
+        this.swaggerCache = swaggerCache;
     }
 
     @Given("^the Swagger definition at (.*)$")
     public void theSwaggerDefinitionAt( String swaggerUrl ) throws Throwable {
-        SwaggerParser parser = new SwaggerParser();
-        swagger = parser.read( swaggerUrl );
+
+        swagger = swaggerCache.getSwagger( swaggerUrl );
 
         if( swagger.getHost() != null ) {
-            endpoint = swagger.getSchemes().get(0).name().toLowerCase() + "://" +
-                swagger.getHost() + swagger.getBasePath();
+            endpoint = swagger.getSchemes().get(0).name().toLowerCase() + "://" + swagger.getHost();
+            if( swagger.getBasePath() != null ) {
+                endpoint += swagger.getBasePath();
+            }
         }
     }
 
@@ -92,6 +96,20 @@ public class GenericRestStepDefs {
         aResponseIsReturnedWithin( statusCode, 0 );
     }
 
+    @Then("^the response is (.*)$")
+    public void theResponseIs(String responseDescription) throws Throwable {
+        if( swaggerOperation == null ){
+            throw new Exception( "missing swagger operation for request");
+        }
+
+        for( String responseCode : swaggerOperation.getResponses().keySet()){
+            Response response = swaggerOperation.getResponses().get(responseCode);
+            if( responseDescription.equalsIgnoreCase(response.getDescription())){
+                aResponseIsReturned( Integer.parseInt(responseCode));
+            }
+        }
+    }
+
     @Then("^a (\\d+) response is returned within (\\d+)ms$")
     public void aResponseIsReturnedWithin(int statusCode, int timeout ) throws Throwable {
         testStep = new RestTestRequestStep();
@@ -99,10 +117,6 @@ public class GenericRestStepDefs {
         testStep.setMethod( method.toUpperCase() );
         if( requestBody != null ) {
             testStep.setRequestBody(requestBody);
-        }
-
-        if( mediaType != null ){
-            testStep.setMediaType( mediaType );
         }
 
         if( !bodyValues.isEmpty()){

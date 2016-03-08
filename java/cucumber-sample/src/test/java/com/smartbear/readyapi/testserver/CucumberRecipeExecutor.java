@@ -31,6 +31,9 @@ public class CucumberRecipeExecutor extends RecipeExecutor {
 
     public void runTestCase() {
         if( testStep != null ) {
+
+            replacePathParameters();
+
             TestCase testCase = new TestCase();
             testCase.setFailTestCaseOnError(true);
             testCase.setTestSteps(Arrays.<TestStep>asList(testStep));
@@ -41,6 +44,14 @@ public class CucumberRecipeExecutor extends RecipeExecutor {
 
             assertEquals(Arrays.toString(execution.getErrorMessages().toArray()),
                 ProjectResultReport.StatusEnum.FINISHED, execution.getCurrentStatus());
+        }
+    }
+
+    private void replacePathParameters() {
+        for( Parameter param : testStep.getParameters()){
+            if( param.getType().equalsIgnoreCase("PATH")){
+                testStep.setURI(testStep.getURI().replaceFirst( "\\{" + param.getName() + "\\}", param.getValue()));
+            }
         }
     }
 
