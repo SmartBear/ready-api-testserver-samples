@@ -32,8 +32,11 @@ mvn testserver:run -Dtestserver.host=... -Dtestserver.user=... -Dtestserver.pass
 
 ### Cucumber Sample
 
-The Cucumber sample contains a simple [feature file](https://github.com/SmartBear/ready-api-testserver-samples/blob/master/java/cucumber-sample/src/test/resources/cucumber/swaggerhub.feature) for testing the SwaggerHub API 
+The Declarative cucumber sample contains a simple [feature file](https://github.com/SmartBear/ready-api-testserver-samples/blob/master/java/cucumber-sample/src/test/resources/cucumber/swaggerhub.feature) for testing the SwaggerHub API 
 and corresponding [step definitions](https://github.com/SmartBear/ready-api-testserver-samples/blob/master/java/cucumber-sample/src/test/java/com/smartbear/readyapi/testserver/SwaggerHubStepDefs.java) to build and execute the required recipe. 
+
+For a generic imperative approach to API Testing with Cucumber and TestServer please have a look at 
+the [testserver-cucumber](https://github.com/olensmar/testserver-cucumber) project.
 
 Running them from the command-line with "mvn test" will result in the following:
 

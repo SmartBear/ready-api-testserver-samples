@@ -56,7 +56,6 @@ public class SwaggerHubStepDefs {
 
     @Then("^a list of APIs should be returned within (\\d+)ms$")
     public void aListOfAPIsShouldBeReturned( int timeout ) throws Throwable {
-
         buildEndpointFromParameters();
 
         XPathContainsAssertion assertion = new XPathContainsAssertion();
@@ -120,6 +119,11 @@ public class SwaggerHubStepDefs {
     @And("^a version named (.+)$")
     public void aVersionNamed( String name ) throws Throwable {
         version = name;
+    }
+
+    @After
+    public void runTest() {
+        executor.runTestCase();
     }
 }
 

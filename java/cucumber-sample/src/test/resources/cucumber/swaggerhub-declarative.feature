@@ -1,7 +1,7 @@
 Feature: SwaggerHub REST API
   Scenario: Default API Listing
     When a request to the API listing is made
-    Then a list of APIs should be returned within 5ms
+    Then a list of APIs should be returned within 500ms
 
   Scenario: Owner API Listing
     Given an owner named swagger-hub
