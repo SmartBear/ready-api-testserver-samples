@@ -71,5 +71,12 @@
             <version>1.0.17</version>
             <scope>test</scope>
         </dependency>
+
+        <dependency>
+            <groupId>com.smartbear.readyapi.testserver.cucumber</groupId>
+            <artifactId>testserver-cucumber-core</artifactId>
+            <version>1.0.0</version>
+            <scope>test</scope>
+        </dependency>
     </dependencies>
 </project>

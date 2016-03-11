@@ -1,20 +1,15 @@
 package com.smartbear.readyapi.testserver;
 
 import com.google.inject.Inject;
-import com.smartbear.readyapi.client.TestRecipe;
-import com.smartbear.readyapi.client.execution.Execution;
 import com.smartbear.readyapi.client.model.Assertion;
 import com.smartbear.readyapi.client.model.JsonPathContentAssertion;
-import com.smartbear.readyapi.client.model.ProjectResultReport;
 import com.smartbear.readyapi.client.model.ResponseSLAAssertion;
 import com.smartbear.readyapi.client.model.RestTestRequestStep;
-import com.smartbear.readyapi.client.model.TestCase;
-import com.smartbear.readyapi.client.model.TestStep;
 import com.smartbear.readyapi.client.model.ValidHttpStatusCodesAssertion;
 import com.smartbear.readyapi.client.model.XPathContainsAssertion;
 import com.smartbear.readyapi.client.teststeps.TestStepTypes;
 import com.smartbear.readyapi.client.teststeps.TestSteps;
-import cucumber.api.PendingException;
+import com.smartbear.readyapi.testserver.cucumber.CucumberRecipeExecutor;
 import cucumber.api.java.After;
 import cucumber.api.java.en.And;
 import cucumber.api.java.en.Given;
@@ -24,8 +19,6 @@ import cucumber.runtime.java.guice.ScenarioScoped;
 
 import java.net.URLEncoder;
 import java.util.Arrays;
-
-import static org.junit.Assert.assertEquals;
 
 @ScenarioScoped
 public class SwaggerHubStepDefs {
