@@ -20,3 +20,10 @@ Feature: SwaggerHub REST API
     And a version named 1.0.0
     When a request to the API listing is made
     Then an API definition should be returned within 500ms
+
+  Scenario: TestServer API Retrieval
+    Given an owner named smartbear
+    And an api named ready-api-testserver
+    And a version named 1.0.0
+    When a request to the API listing is made
+    Then an API definition should be returned within 500ms
