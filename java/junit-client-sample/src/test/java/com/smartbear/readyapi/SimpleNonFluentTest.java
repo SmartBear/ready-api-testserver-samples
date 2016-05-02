@@ -12,7 +12,7 @@ import com.smartbear.readyapi.client.model.TestStep;
 import com.smartbear.readyapi.client.model.ValidHttpStatusCodesAssertion;
 import com.smartbear.readyapi.client.teststeps.TestStepTypes;
 import com.smartbear.readyapi.client.teststeps.TestSteps;
-import com.smartbear.readyapi.client.teststeps.restrequest.BaseRestRequest;
+import com.smartbear.readyapi.client.teststeps.restrequest.RestRequestStepBuilder;
 import org.junit.Test;
 
 import java.util.Arrays;
@@ -36,12 +36,12 @@ public class SimpleNonFluentTest extends ApiTestBase {
         Parameter parameter = new Parameter();
         parameter.setName( "query");
         parameter.setValue( "testserver");
-        parameter.setType(BaseRestRequest.ParameterType.QUERY.name() );
+        parameter.setType(RestRequestStepBuilder.ParameterType.QUERY.name() );
         restTestRequestStep.setParameters( Arrays.asList(parameter));
 
         JsonPathContentAssertion assertion = new JsonPathContentAssertion();
         assertion.setJsonPath( "$.totalCount");
-        assertion.setExpectedContent( "2");
+        assertion.setExpectedContent( "3");
         assertion.setType("JsonPath Match");
 
         restTestRequestStep.setAssertions(Arrays.<Assertion>asList( assertion ));
