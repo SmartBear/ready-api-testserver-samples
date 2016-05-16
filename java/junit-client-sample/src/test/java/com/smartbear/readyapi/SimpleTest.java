@@ -69,7 +69,7 @@ public class SimpleTest extends ApiTestBase
                 .forOperation("GetWeather")
                 .withParameter("CountryName", "Sweden")
                 .withPathParameter("//*:CityName", "Stockholm")
-                .assertNotSoapFault()
+                .assertSoapOkResponse()
                 .assertSchemaCompliance()
 
             )

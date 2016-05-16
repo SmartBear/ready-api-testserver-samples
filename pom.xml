@@ -15,4 +15,13 @@
         <module>java/cucumber-sample</module>
     </modules>
 
+    <dependencies>
+        <dependency>
+            <groupId>com.smartbear.readyapi</groupId>
+            <artifactId>ready-api-testserver-client</artifactId>
+            <version>1.0.5-SNAPSHOT</version>
+        </dependency>
+
+    </dependencies>
+
 </project>

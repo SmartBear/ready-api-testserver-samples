@@ -4,15 +4,14 @@ import com.smartbear.readyapi.client.TestRecipe;
 import com.smartbear.readyapi.client.execution.Execution;
 import com.smartbear.readyapi.client.model.Assertion;
 import com.smartbear.readyapi.client.model.JsonPathContentAssertion;
-import com.smartbear.readyapi.client.model.Parameter;
 import com.smartbear.readyapi.client.model.ProjectResultReport;
+import com.smartbear.readyapi.client.model.RestParameter;
 import com.smartbear.readyapi.client.model.RestTestRequestStep;
 import com.smartbear.readyapi.client.model.TestCase;
 import com.smartbear.readyapi.client.model.TestStep;
 import com.smartbear.readyapi.client.model.ValidHttpStatusCodesAssertion;
 import com.smartbear.readyapi.client.teststeps.TestStepTypes;
 import com.smartbear.readyapi.client.teststeps.TestSteps;
-import com.smartbear.readyapi.client.teststeps.restrequest.RestRequestStepBuilder;
 import org.junit.Test;
 
 import java.util.Arrays;
@@ -33,10 +32,10 @@ public class SimpleNonFluentTest extends ApiTestBase {
         restTestRequestStep.setMethod( TestSteps.HttpMethod.GET.name() );
         restTestRequestStep.setType(TestStepTypes.REST_REQUEST.getName());
 
-        Parameter parameter = new Parameter();
+        RestParameter parameter = new RestParameter();
         parameter.setName( "query");
         parameter.setValue( "testserver");
-        parameter.setType(RestRequestStepBuilder.ParameterType.QUERY.name() );
+        parameter.setType(RestParameter.TypeEnum.QUERY );
         restTestRequestStep.setParameters( Arrays.asList(parameter));
 
         JsonPathContentAssertion assertion = new JsonPathContentAssertion();

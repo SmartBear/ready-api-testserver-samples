@@ -47,8 +47,6 @@
         <dependency>
             <groupId>com.smartbear.readyapi</groupId>
             <artifactId>ready-api-testserver-client</artifactId>
-            <version>1.0.2</version>
-            <scope>test</scope>
         </dependency>
 
         <dependency>
