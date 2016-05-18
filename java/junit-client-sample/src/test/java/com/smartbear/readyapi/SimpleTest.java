@@ -3,6 +3,7 @@ package com.smartbear.readyapi;
 import com.smartbear.readyapi.client.TestRecipe;
 import com.smartbear.readyapi.client.execution.Execution;
 import com.smartbear.readyapi.client.model.ProjectResultReport;
+import com.smartbear.readyapi.client.result.TestStepResult;
 import org.junit.Test;
 
 import java.net.URL;
@@ -11,6 +12,7 @@ import java.util.Arrays;
 import static com.smartbear.readyapi.client.TestRecipeBuilder.newTestRecipe;
 import static com.smartbear.readyapi.client.teststeps.TestSteps.getRequest;
 import static com.smartbear.readyapi.client.teststeps.TestSteps.soapRequest;
+import static junit.framework.TestCase.assertNotNull;
 import static org.junit.Assert.assertEquals;
 
 public class SimpleTest extends ApiTestBase
@@ -30,6 +32,12 @@ public class SimpleTest extends ApiTestBase
 
     private void executeAndAssert(TestRecipe recipe) {
         Execution execution = executor.executeRecipe(recipe);
+
+        for(TestStepResult result : execution.getExecutionResult().getTestStepResults()){
+            assertNotNull( result.getResponseContent());
+            System.out.println( "Response content for failed TestStep [" + result.getTestStepName() + "]: " +
+                result.getResponseContent() );
+        }
 
         assertEquals(Arrays.toString( execution.getErrorMessages().toArray()),
             ProjectResultReport.StatusEnum.FINISHED, execution.getCurrentStatus());
