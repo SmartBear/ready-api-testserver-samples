@@ -54,7 +54,7 @@ public class SimpleNonFluentTest extends ApiTestBase {
         Execution execution = executor.executeRecipe(recipe);
 
         assertEquals(Arrays.toString(execution.getErrorMessages().toArray()),
-                ProjectResultReport.StatusEnum.FINISHED, execution.getCurrentStatus());
+            ProjectResultReport.StatusEnum.FINISHED, execution.getCurrentStatus());
     }
 
     @Test
@@ -76,10 +76,6 @@ public class SimpleNonFluentTest extends ApiTestBase {
         testCase.setTestSteps(Arrays.<TestStep>asList(restTestRequestStep));
 
         TestRecipe recipe = new TestRecipe(testCase);
-
-        Execution execution = executor.executeRecipe(recipe);
-
-        assertEquals(Arrays.toString(execution.getErrorMessages().toArray()),
-                ProjectResultReport.StatusEnum.FINISHED, execution.getCurrentStatus());
+        executeAndAssert(recipe);
     }
 }
