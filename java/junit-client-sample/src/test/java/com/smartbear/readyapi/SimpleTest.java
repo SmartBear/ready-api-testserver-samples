@@ -11,36 +11,35 @@ import static com.smartbear.readyapi.client.TestRecipeBuilder.newTestRecipe;
 import static com.smartbear.readyapi.client.teststeps.TestSteps.getRequest;
 import static org.junit.Assert.assertEquals;
 
-public class SimpleTest extends ApiTestBase
-{
+public class SimpleTest extends ApiTestBase {
     @Test
     public void simpleCountTest() throws Exception {
         TestRecipe recipe = newTestRecipe()
-            .addStep(
-                getRequest("https://api.swaggerhub.com/apis")
-                    .addQueryParameter("query", "testserver")
-                    .assertJsonContent("$.totalCount", "2" )
-            )
-            .buildTestRecipe();
+                .addStep(
+                        getRequest("https://api.swaggerhub.com/apis")
+                                .addQueryParameter("query", "testserver")
+                                .assertJsonContent("$.totalCount", "3")
+                )
+                .buildTestRecipe();
 
         Execution execution = executor.executeRecipe(recipe);
 
-        assertEquals(Arrays.toString( execution.getErrorMessages().toArray()),
-            ProjectResultReport.StatusEnum.FINISHED, execution.getCurrentStatus());
+        assertEquals(Arrays.toString(execution.getErrorMessages().toArray()),
+                ProjectResultReport.StatusEnum.FINISHED, execution.getCurrentStatus());
     }
 
     @Test
     public void simpleTest() throws Exception {
         TestRecipe recipe = newTestRecipe()
-            .addStep(
-                getRequest("https://api.swaggerhub.com/apis")
-                    .assertValidStatusCodes( 200 )
-            )
-            .buildTestRecipe();
+                .addStep(
+                        getRequest("https://api.swaggerhub.com/apis")
+                                .assertValidStatusCodes(200)
+                )
+                .buildTestRecipe();
 
         Execution execution = executor.executeRecipe(recipe);
 
-        assertEquals(Arrays.toString( execution.getErrorMessages().toArray()),
-            ProjectResultReport.StatusEnum.FINISHED, execution.getCurrentStatus());
+        assertEquals(Arrays.toString(execution.getErrorMessages().toArray()),
+                ProjectResultReport.StatusEnum.FINISHED, execution.getCurrentStatus());
     }
 }
