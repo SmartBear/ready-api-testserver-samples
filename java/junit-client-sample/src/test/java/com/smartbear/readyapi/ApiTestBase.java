@@ -15,6 +15,7 @@ import java.net.URL;
 import java.util.Arrays;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 
 public class ApiTestBase {
 
@@ -36,8 +37,11 @@ public class ApiTestBase {
 
     void executeAndAssert(TestRecipe recipe) {
         LOG.debug("Executing recipe: " + recipe.toString());
+        assertExecution( executor.executeRecipe(recipe));
+    }
 
-        Execution execution = executor.executeRecipe(recipe);
+    protected void assertExecution(Execution execution)  {
+        assertNotNull( execution );
 
         for (TestStepResult result : execution.getExecutionResult().getTestStepResults()) {
             LOG.debug("Response content for TestStep [" + result.getTestStepName() + "]: " +
