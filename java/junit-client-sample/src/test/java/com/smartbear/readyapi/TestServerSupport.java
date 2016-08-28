@@ -6,10 +6,10 @@ import com.smartbear.readyapi.client.execution.RecipeExecutor;
 import com.smartbear.readyapi.client.execution.Scheme;
 import com.smartbear.readyapi.client.model.ProjectResultReport;
 import com.smartbear.readyapi.client.result.TestStepResult;
-import org.junit.BeforeClass;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.io.File;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.Arrays;
@@ -17,12 +17,11 @@ import java.util.Arrays;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
-public class ApiTestBase {
+public class TestServerSupport {
 
-    final static Logger LOG = LoggerFactory.getLogger(ApiTestBase.class);
+    final static Logger LOG = LoggerFactory.getLogger(TestServerSupport.class);
     static RecipeExecutor executor;
 
-    @BeforeClass
     public static void initExecutor() throws MalformedURLException {
         String hostName = System.getProperty("testserver.host", "http://testserver.readyapi.io:8080");
         String user = System.getProperty("testserver.user", "demoUser");
@@ -35,12 +34,12 @@ public class ApiTestBase {
         executor.setCredentials(user, password);
     }
 
-    void executeAndAssert(TestRecipe recipe) {
+    public static void executeAndAssert(TestRecipe recipe) throws Exception {
         LOG.debug("Executing recipe: " + recipe.toString());
-        assertExecution( executor.executeRecipe(recipe));
+        assertExecution(getExecutor().executeRecipe(recipe));
     }
 
-    protected void assertExecution(Execution execution)  {
+    public static void assertExecution(Execution execution) {
         assertNotNull( execution );
 
         for (TestStepResult result : execution.getExecutionResult().getTestStepResults()) {
@@ -52,4 +51,18 @@ public class ApiTestBase {
             ProjectResultReport.StatusEnum.FINISHED, execution.getCurrentStatus());
     }
 
+    public static Execution executeRecipe(TestRecipe recipe) throws Exception {
+        return getExecutor().executeRecipe(recipe);
+    }
+
+    public static Execution executeProject(File file) throws Exception {
+        return getExecutor().executeProject(file);
+    }
+
+    public static synchronized RecipeExecutor getExecutor() throws Exception {
+        if (executor == null) {
+            initExecutor();
+        }
+        return executor;
+    }
 }
