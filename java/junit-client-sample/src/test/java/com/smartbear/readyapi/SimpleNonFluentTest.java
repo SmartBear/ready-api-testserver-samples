@@ -22,7 +22,7 @@ import static org.junit.Assert.assertEquals;
  * same tests as in SimpleTest but without using the fluent interfaces
  */
 
-public class SimpleNonFluentTest extends ApiTestBase {
+public class SimpleNonFluentTest {
 
     @Test
     public void simpleCountTest() throws Exception {
@@ -51,7 +51,7 @@ public class SimpleNonFluentTest extends ApiTestBase {
 
         TestRecipe recipe = new TestRecipe(testCase);
 
-        Execution execution = executor.executeRecipe(recipe);
+        Execution execution = TestServerSupport.executeRecipe(recipe);
 
         assertEquals(Arrays.toString(execution.getErrorMessages().toArray()),
             ProjectResultReport.StatusEnum.FINISHED, execution.getCurrentStatus());
@@ -76,6 +76,6 @@ public class SimpleNonFluentTest extends ApiTestBase {
         testCase.setTestSteps(Arrays.<TestStep>asList(restTestRequestStep));
 
         TestRecipe recipe = new TestRecipe(testCase);
-        executeAndAssert(recipe);
+        TestServerSupport.executeAndAssert(recipe);
     }
 }

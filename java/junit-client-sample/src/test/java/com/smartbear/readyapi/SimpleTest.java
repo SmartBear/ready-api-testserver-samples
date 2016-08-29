@@ -14,7 +14,7 @@ import static com.smartbear.readyapi.client.teststeps.TestSteps.soapRequest;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 
-public class SimpleTest extends ApiTestBase {
+public class SimpleTest {
 
     @Test
     public void simpleCountTest() throws Exception {
@@ -26,7 +26,7 @@ public class SimpleTest extends ApiTestBase {
             )
             .buildTestRecipe();
 
-        executeAndAssert(recipe);
+        TestServerSupport.executeAndAssert(recipe);
     }
 
     @Test
@@ -38,7 +38,7 @@ public class SimpleTest extends ApiTestBase {
             )
             .buildTestRecipe();
 
-        executeAndAssert(recipe);
+        TestServerSupport.executeAndAssert(recipe);
     }
 
     @Test
@@ -53,16 +53,17 @@ public class SimpleTest extends ApiTestBase {
             .assertSchemaCompliance();
 
         TestRecipe recipe = newTestRecipe().addStep( soapRequest ).buildTestRecipe();
-        executeAndAssert(recipe);
+        TestServerSupport.executeAndAssert(recipe);
     }
 
     @Test
     public void simpleProjectTest() throws Exception {
-        Execution execution = executor.executeProject(new File("src/test/resources/TestProject.xml"));
+        Execution execution = TestServerSupport.executeProject(new File("src/test/resources/TestProject.xml"));
+
         assertNotNull( execution );
 
         try {
-            assertExecution( execution );
+            TestServerSupport.assertExecution(execution);
             assertFalse( true );
         }
         catch( AssertionError e ){
@@ -71,11 +72,11 @@ public class SimpleTest extends ApiTestBase {
 
     @Test
     public void simpleCompositeProjectTest() throws Exception {
-        Execution execution = executor.executeProject(new File("src/test/resources/CompositeTestProject"));
+        Execution execution = TestServerSupport.executeProject(new File("src/test/resources/CompositeTestProject"));
         assertNotNull( execution );
 
         try {
-            assertExecution( execution );
+            TestServerSupport.assertExecution(execution);
             assertFalse( true );
         }
         catch( AssertionError e ){
