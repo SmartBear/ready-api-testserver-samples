@@ -1,10 +1,8 @@
 package com.smartbear.readyapi;
 
 import com.smartbear.readyapi.client.TestRecipe;
-import com.smartbear.readyapi.client.execution.Execution;
 import com.smartbear.readyapi.client.model.Assertion;
 import com.smartbear.readyapi.client.model.JsonPathContentAssertion;
-import com.smartbear.readyapi.client.model.ProjectResultReport;
 import com.smartbear.readyapi.client.model.RestParameter;
 import com.smartbear.readyapi.client.model.RestTestRequestStep;
 import com.smartbear.readyapi.client.model.TestCase;
@@ -15,8 +13,6 @@ import com.smartbear.readyapi.client.teststeps.TestSteps;
 import org.junit.Test;
 
 import java.util.Arrays;
-
-import static org.junit.Assert.assertEquals;
 
 /**
  * same tests as in SimpleTest but without using the fluent interfaces
@@ -50,11 +46,7 @@ public class SimpleNonFluentTest extends ApiTestBase {
         testCase.setTestSteps(Arrays.<TestStep>asList(restTestRequestStep));
 
         TestRecipe recipe = new TestRecipe(testCase);
-
-        Execution execution = executeRecipe(recipe);
-
-        assertEquals(Arrays.toString(execution.getErrorMessages().toArray()),
-            ProjectResultReport.StatusEnum.FINISHED, execution.getCurrentStatus());
+        executeAndAssert(recipe);
     }
 
     @Test

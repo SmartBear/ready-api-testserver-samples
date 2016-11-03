@@ -34,16 +34,16 @@ public class ApiTestBase {
         projectExecutor = testServerClient.createProjectExecutor();
     }
 
-    void executeAndAssert(TestRecipe recipe) {
+    public static void executeAndAssert(TestRecipe recipe) {
         LOG.debug("Executing recipe: " + recipe.toString());
         AssertionUtils.assertExecution(recipeExecutor.executeRecipe(recipe));
     }
 
-    public Execution executeRecipe(TestRecipe recipe) throws Exception {
+    public static Execution executeRecipe(TestRecipe recipe) throws Exception {
         return recipeExecutor.executeRecipe(recipe);
     }
 
-    public Execution executeProject(File file) throws Exception {
+    public static Execution executeProject(File file) throws Exception {
         ProjectExecutionRequest request = ProjectExecutionRequest.Builder.newInstance().withProjectFile(file).build();
         return projectExecutor.executeProject(request);
     }
