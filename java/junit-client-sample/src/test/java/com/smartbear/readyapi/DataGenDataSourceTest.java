@@ -10,13 +10,13 @@ import static com.smartbear.readyapi.client.teststeps.datasource.datagen.DataGen
 import static com.smartbear.readyapi.client.teststeps.datasource.datagen.DataGenerators.mac48ComputerAddressTypeProperty;
 import static com.smartbear.readyapi.client.teststeps.datasource.datagen.DataGenerators.randomIntegerTypeProperty;
 
-public class DataGenDataSourceTest {
+public class DataGenDataSourceTest extends ApiTestBase {
 
     @Test
     public void createRecipeForAllDataGenerators() throws Exception {
         TestRecipe recipe = newTestRecipe()
             .addStep(dataGenDataSource()
-                .withNumberOfRows(34)
+                .withNumberOfRows(10)
                 .withProperties(
                     cityTypeProperty("cityProperty")
                         .duplicatedBy(2)
@@ -34,6 +34,6 @@ public class DataGenDataSourceTest {
 
         recipe.getTestCase().discardOkResults(false);
 
-        TestServerSupport.executeAndAssert(recipe);
+        executeAndAssert(recipe);
     }
 }

@@ -1,10 +1,8 @@
 package com.smartbear.readyapi;
 
 import com.smartbear.readyapi.client.TestRecipe;
-import com.smartbear.readyapi.client.execution.Execution;
 import com.smartbear.readyapi.client.model.Assertion;
 import com.smartbear.readyapi.client.model.JsonPathContentAssertion;
-import com.smartbear.readyapi.client.model.ProjectResultReport;
 import com.smartbear.readyapi.client.model.RestParameter;
 import com.smartbear.readyapi.client.model.RestTestRequestStep;
 import com.smartbear.readyapi.client.model.TestCase;
@@ -16,13 +14,11 @@ import org.junit.Test;
 
 import java.util.Arrays;
 
-import static org.junit.Assert.assertEquals;
-
 /**
  * same tests as in SimpleTest but without using the fluent interfaces
  */
 
-public class SimpleNonFluentTest {
+public class SimpleNonFluentTest extends ApiTestBase {
 
     @Test
     public void simpleCountTest() throws Exception {
@@ -50,11 +46,7 @@ public class SimpleNonFluentTest {
         testCase.setTestSteps(Arrays.<TestStep>asList(restTestRequestStep));
 
         TestRecipe recipe = new TestRecipe(testCase);
-
-        Execution execution = TestServerSupport.executeRecipe(recipe);
-
-        assertEquals(Arrays.toString(execution.getErrorMessages().toArray()),
-            ProjectResultReport.StatusEnum.FINISHED, execution.getCurrentStatus());
+        executeAndAssert(recipe);
     }
 
     @Test
@@ -66,7 +58,7 @@ public class SimpleNonFluentTest {
         restTestRequestStep.setType(TestStepTypes.REST_REQUEST.getName());
 
         ValidHttpStatusCodesAssertion assertion = new ValidHttpStatusCodesAssertion();
-        assertion.setValidStatusCodes(Arrays.asList(200));
+        assertion.setValidStatusCodes(Arrays.asList("200"));
         assertion.setType("Valid HTTP Status Codes");
 
         restTestRequestStep.setAssertions(Arrays.<Assertion>asList(assertion));
@@ -76,6 +68,6 @@ public class SimpleNonFluentTest {
         testCase.setTestSteps(Arrays.<TestStep>asList(restTestRequestStep));
 
         TestRecipe recipe = new TestRecipe(testCase);
-        TestServerSupport.executeAndAssert(recipe);
+        executeAndAssert(recipe);
     }
 }

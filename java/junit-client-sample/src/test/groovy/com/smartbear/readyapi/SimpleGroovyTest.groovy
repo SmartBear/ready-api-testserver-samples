@@ -6,8 +6,10 @@ import static com.smartbear.readyapi.client.TestRecipeBuilder.newTestRecipe
 import static com.smartbear.readyapi.client.teststeps.TestSteps.getRequest
 
 class SimpleGroovyTest extends GroovyTestCase {
-
     public void testSimpleCount() throws Exception {
+
+        ApiTestBase.initExecutor()
+
         TestRecipe recipe = newTestRecipe()
                 .addStep(
                 getRequest("https://api.swaggerhub.com/apis")
@@ -15,6 +17,6 @@ class SimpleGroovyTest extends GroovyTestCase {
                         .assertJsonContent('$.totalCount', "3")
         ).buildTestRecipe();
 
-        TestServerSupport.executeAndAssert(recipe);
+        ApiTestBase.executeAndAssert(recipe);
     }
 }

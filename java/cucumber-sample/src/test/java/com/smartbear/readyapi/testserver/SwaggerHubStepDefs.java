@@ -61,11 +61,11 @@ public class SwaggerHubStepDefs {
 
     private void addDefaultAssertions(int timeout, Assertion contentAssertion) {
         ResponseSLAAssertion slaAssertion = new ResponseSLAAssertion();
-        slaAssertion.setMaxResponseTime( timeout );
+        slaAssertion.setMaxResponseTime(String.valueOf(timeout));
         slaAssertion.setType( "Response SLA" );
 
         ValidHttpStatusCodesAssertion httpStatusCodesAssertion = new ValidHttpStatusCodesAssertion();
-        httpStatusCodesAssertion.setValidStatusCodes( Arrays.asList(200) );
+        httpStatusCodesAssertion.setValidStatusCodes(Arrays.asList("200"));
         httpStatusCodesAssertion.setType("Valid HTTP Status Codes" );
 
         executor.setAssertions(
