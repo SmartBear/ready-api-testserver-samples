@@ -16,7 +16,7 @@ public class DataGenDataSourceTest extends ApiTestBase {
     public void createRecipeForAllDataGenerators() throws Exception {
         TestRecipe recipe = newTestRecipe()
             .addStep(dataGenDataSource()
-                .withNumberOfRows(34)
+                .withNumberOfRows(10)
                 .withProperties(
                     cityTypeProperty("cityProperty")
                         .duplicatedBy(2)

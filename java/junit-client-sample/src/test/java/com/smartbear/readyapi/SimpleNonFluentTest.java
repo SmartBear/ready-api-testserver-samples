@@ -51,7 +51,7 @@ public class SimpleNonFluentTest extends ApiTestBase {
 
         TestRecipe recipe = new TestRecipe(testCase);
 
-        Execution execution = executor.executeRecipe(recipe);
+        Execution execution = executeRecipe(recipe);
 
         assertEquals(Arrays.toString(execution.getErrorMessages().toArray()),
             ProjectResultReport.StatusEnum.FINISHED, execution.getCurrentStatus());
@@ -66,7 +66,7 @@ public class SimpleNonFluentTest extends ApiTestBase {
         restTestRequestStep.setType(TestStepTypes.REST_REQUEST.getName());
 
         ValidHttpStatusCodesAssertion assertion = new ValidHttpStatusCodesAssertion();
-        assertion.setValidStatusCodes(Arrays.asList(200));
+        assertion.setValidStatusCodes(Arrays.asList("200"));
         assertion.setType("Valid HTTP Status Codes");
 
         restTestRequestStep.setAssertions(Arrays.<Assertion>asList(assertion));
