@@ -4,7 +4,7 @@ import com.smartbear.readyapi.client.TestRecipe;
 import org.junit.Test;
 
 import static com.smartbear.readyapi.client.TestRecipeBuilder.newTestRecipe;
-import static com.smartbear.readyapi.client.teststeps.TestSteps.dataGenDataSource;
+import static com.smartbear.readyapi.client.teststeps.ServerTestSteps.dataGenDataSource;
 import static com.smartbear.readyapi.client.teststeps.TestSteps.getRequest;
 import static com.smartbear.readyapi.client.teststeps.datasource.datagen.DataGenerators.cityTypeProperty;
 import static com.smartbear.readyapi.client.teststeps.datasource.datagen.DataGenerators.mac48ComputerAddressTypeProperty;

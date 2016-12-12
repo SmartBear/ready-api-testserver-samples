@@ -20,7 +20,7 @@
     <dependencies>
         <dependency>
             <groupId>com.smartbear.readyapi</groupId>
-            <artifactId>ready-api-testserver-client</artifactId>
+            <artifactId>ready-api-testserver-client-core</artifactId>
         </dependency>
         <dependency>
             <groupId>junit</groupId>

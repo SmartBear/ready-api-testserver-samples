@@ -39,10 +39,6 @@ public class ApiTestBase {
         AssertionUtils.assertExecution(recipeExecutor.executeRecipe(recipe));
     }
 
-    public static Execution executeRecipe(TestRecipe recipe) throws Exception {
-        return recipeExecutor.executeRecipe(recipe);
-    }
-
     public static Execution executeProject(File file) throws Exception {
         ProjectExecutionRequest request = ProjectExecutionRequest.Builder.newInstance().withProjectFile(file).build();
         return projectExecutor.executeProject(request);
