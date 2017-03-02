@@ -36,7 +36,7 @@ public class SimpleNonFluentTest extends ApiTestBase {
 
         JsonPathContentAssertion assertion = new JsonPathContentAssertion();
         assertion.setJsonPath("$.totalCount");
-        assertion.setExpectedContent("3");
+        assertion.setExpectedContent("4");
         assertion.setType("JsonPath Match");
 
         restTestRequestStep.setAssertions(Arrays.<Assertion>asList(assertion));
