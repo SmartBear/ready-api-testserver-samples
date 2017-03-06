@@ -14,7 +14,7 @@ public class SimpleRestTest extends ApiTestBase {
             .addStep(
                 getRequest("https://api.swaggerhub.com/apis")
                     .addQueryParameter("query", "testserver")
-                    .assertJsonContent("$.totalCount", "3")
+                    .assertJsonContent("$.totalCount", "4")
             )
             .buildTestRecipe();
 

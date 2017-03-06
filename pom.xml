@@ -13,6 +13,7 @@
         <module>java/junit-client-sample</module>
         <module>java/maven-plugin-sample</module>
         <module>java/cucumber-sample</module>
+        <module>groovy/groovy-dsl-sample</module>
     </modules>
 
     <dependencyManagement>
@@ -21,6 +22,16 @@
                 <groupId>com.smartbear.readyapi</groupId>
                 <artifactId>ready-api-testserver-client</artifactId>
                 <version>1.2.2-SNAPSHOT</version>
+            </dependency>
+            <dependency>
+                <groupId>com.smartbear.readyapi</groupId>
+                <artifactId>readyapi4j-groovy-dsl</artifactId>
+                <version>2.0.0-SNAPSHOT</version>
+            </dependency>
+            <dependency>
+                <groupId>com.smartbear.readyapi</groupId>
+                <artifactId>readyapi4j-local</artifactId>
+                <version>2.0.0-SNAPSHOT</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
